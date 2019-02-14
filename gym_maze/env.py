@@ -28,7 +28,7 @@ class MazeEnv(gym.Env):
         (self._pos, self._goal_pos) = self._get_positions()
 
     def _get_pixel(self, x, y):
-        data_pos = y * 7 + x
+        data_pos = y * self._maze_size + x
         return self._map_data[data_pos]
 
     def _get_positions(self):
@@ -152,10 +152,10 @@ class GoalMazeEnv(gym.GoalEnv, MazeEnv):
         for y in range(self._maze_size):
             for x in range(self._maze_size):
                 p = self._get_pixel(x,y)
-            if p in ['S', 'G', '-']:
-                yield (x, y)
-            else:
-                pass
+                if p in ['S', 'G', '-']:
+                    yield (x, y)
+                else:
+                    pass
 
     def _get_positions(self):
         potentials = list(self._iter_pos())
