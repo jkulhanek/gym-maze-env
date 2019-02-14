@@ -62,7 +62,7 @@ class MazeEnv(gym.Env):
 
         if self._get_pixel(new_x, new_y) == '+':
             new_x = x
-            new_y = x
+            new_y = y
             hit_wall = True
 
         hit = clamped_x or clamped_y or hit_wall
