@@ -1,5 +1,5 @@
 from gym.envs.registration import register
-from gym_maze.env import MazeEnv
+from gym_maze.env import MazeEnv, GoalMazeEnv
 
 register(
     id='Maze-v0',
