@@ -23,7 +23,7 @@ class MazeEnv(gym.Env):
         (self._maze_size, self._map_data) = _get_maze(**kwargs)
         self._random = random.Random()
         self.action_space = gym.spaces.Discrete(4)
-        self.observation_space = gym.spaces.Box(0.0, 1.0, (84, 84, 3), dtype=np.float32)
+        self.observation_space = gym.spaces.Box(0, 255, (84, 84, 3), dtype=np.int8)
 
         (self._pos, self._goal_pos) = self._get_positions()
 
@@ -69,7 +69,7 @@ class MazeEnv(gym.Env):
         return (new_x, new_y), hit
 
     def _get_current_state(self):
-        image = np.zeros((84, 84, 3), dtype=float)
+        image = np.zeros((84, 84, 3), dtype=np.int8)
 
         for y in range(self._maze_size):
             for x in range(self._maze_size):
@@ -84,9 +84,9 @@ class MazeEnv(gym.Env):
     def _put_pixel(self, image, x, y, item):
         colormap = [
             np.array([0, 0, 0]),
-            np.array([1.0, 0, 0]),
-            np.array([0, 1.0, 0]),
-            np.array([0, 0, 1.0])
+            np.array([255, 0, 0]),
+            np.array([0, 255, 0]),
+            np.array([0, 0, 255])
         ]
         for i in range(12):
             for j in range(12):
@@ -162,8 +162,8 @@ class GoalMazeEnv(gym.GoalEnv, MazeEnv):
         return tuple(self._random.sample(potentials, 2))
 
     def _get_current_state(self):
-        image = np.zeros((84, 84, 3), dtype=float)
-        goal = np.zeros((84, 84, 3), dtype=float)
+        image = np.zeros((84, 84, 3), dtype=np.int8)
+        goal = np.zeros((84, 84, 3), dtype=np.int8)
 
         for y in range(self._maze_size):
             for x in range(self._maze_size):
